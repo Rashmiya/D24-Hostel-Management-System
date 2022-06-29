@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jfoenix-8.0.7">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/lk/ijse/D24_hostel_Management_System/lib/jfoenix-8.0.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lk/ijse/D24_hostel_Management_System/lib/mysql-connector-java-8.0.28.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
