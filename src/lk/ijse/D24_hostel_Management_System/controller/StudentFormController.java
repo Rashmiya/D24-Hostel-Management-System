@@ -6,19 +6,15 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.D24_hostel_Management_System.entity.Student;
+import javafx.util.Duration;
+import lk.ijse.D24_hostel_Management_System.bo.BOFactory;
+import lk.ijse.D24_hostel_Management_System.bo.custom.StudentBO;
 import lk.ijse.D24_hostel_Management_System.util.Loader;
 import lk.ijse.D24_hostel_Management_System.view.tm.StudentTM;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class StudentFormController implements Loader {
     public AnchorPane manageStudentForm;
@@ -26,8 +22,6 @@ public class StudentFormController implements Loader {
     public JFXTextField txtName;
     public JFXTextField txtAddress;
     public JFXTextField txtContact;
-    public JFXDatePicker txtDOB;
-    public JFXComboBox<String> txtGender;
     public TableColumn colId;
     public TableColumn colName;
     public TableColumn colAddress;
@@ -40,6 +34,8 @@ public class StudentFormController implements Loader {
     public JFXComboBox cmbGender;
     public Button btnSave;
     public Button btnUpdate;
+
+    StudentBO studentBO = (StudentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.STUDENT);
 
     public void initialize(){
        /* colID.setCellValueFactory(new PropertyValueFactory("id"));
@@ -98,7 +94,38 @@ public class StudentFormController implements Loader {
     }
 
     public void saveStudentOnAction(ActionEvent actionEvent) {
+        if (datePickerDOB.getValue() != null) {
+            if (btnSave.getText().equals("Save")) {
+                if (cmbGender.getValue() != null) {
+                    /*Save Student*/
+                    if (sBO.saveStudent(new StudentDTO(txtStudentID.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtpckrDOB.getValue(), cmbGender.getValue()))) {
+                        NotificationUtil.playNotification(AnimationType.POPUP, "Student Saved Successfully!", NotificationType.SUCCESS, Duration.millis(3000));
+                        btnCancel.fire();
+                        loadStudents(sBO.getAllStudents());
+                    } else {
+                        NotificationUtil.playNotification(AnimationType.POPUP, "Something Went Wrong !", NotificationType.ERROR, Duration.millis(3000));
+                    }
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Gender Not Selected!", ButtonType.OK).show();
+                }
+            } else {
+                if (sBO.updateStudent(new StudentDTO(txtStudentID.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtpckrDOB.getValue(), cmbGender.getValue()))) {
+                    NotificationUtil.playNotification(AnimationType.POPUP, "Student Updated Successfully!", NotificationType.SUCCESS, Duration.millis(3000));
+                    btnCancel.fire();
+                    loadStudents(sBO.getAllStudents());
+                } else {
+                    NotificationUtil.playNotification(AnimationType.POPUP, "Something Went Wrong !", NotificationType.ERROR, Duration.millis(3000));
+                }
+            }
 
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Date Of Birth Is Not Selected Or You Are Not Over 18 Years!", ButtonType.OK).show();
+
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
+    }
     }
 
     public void updateStudentOnAction(ActionEvent actionEvent) {
