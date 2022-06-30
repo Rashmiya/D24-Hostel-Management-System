@@ -34,8 +34,8 @@
       <JFXTextField fx:id="txtName" labelFloat="true" layoutX="191.0" layoutY="81.0" prefHeight="25.0" prefWidth="158.0" promptText="Student Name" />
       <JFXTextField fx:id="txtAddress" labelFloat="true" layoutX="380.0" layoutY="81.0" prefHeight="25.0" prefWidth="190.0" promptText="Student Address" />
       <JFXTextField fx:id="txtContact" labelFloat="true" layoutX="26.0" layoutY="139.0" promptText="Contact Number" />
-      <JFXDatePicker fx:id="txtDOB" defaultColor="#171717" layoutX="191.0" layoutY="142.0" overLay="true" promptText="DOB" />
-      <JFXComboBox fx:id="txtGender" labelFloat="true" layoutX="380.0" layoutY="142.0" prefHeight="25.0" prefWidth="190.0" promptText="Gender" visibleRowCount="14" />
+      <JFXDatePicker fx:id="datePickerDOB" defaultColor="#171717" layoutX="191.0" layoutY="142.0" overLay="true" promptText="DOB" />
+      <JFXComboBox fx:id="cmbGender" labelFloat="true" layoutX="380.0" layoutY="142.0" prefHeight="25.0" prefWidth="190.0" promptText="Gender" visibleRowCount="14" />
       <TableView fx:id="tblStudent" layoutX="22.0" layoutY="280.0" prefHeight="179.0" prefWidth="556.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="68.0" text="ID" />
@@ -47,12 +47,12 @@
             <TableColumn fx:id="colModify" prefWidth="72.0" text="......" />
         </columns>
       </TableView>
-      <Button layoutX="161.0" layoutY="192.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" style="-fx-background-color: #223570;" text="Save" textFill="#ebebeb">
+      <Button fx:id="btnSave" layoutX="161.0" layoutY="192.0" mnemonicParsing="false" onAction="#saveStudentOnAction" prefHeight="25.0" prefWidth="86.0" style="-fx-background-color: #223570;" text="Save" textFill="#ebebeb">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
-      <Button layoutX="277.0" layoutY="192.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" style="-fx-background-color: #223570;" text="Update" textFill="WHITE">
+      <Button fx:id="btnUpdate" layoutX="277.0" layoutY="192.0" mnemonicParsing="false" onAction="#updateStudentOnAction" prefHeight="25.0" prefWidth="86.0" style="-fx-background-color: #223570;" text="Update" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font>
