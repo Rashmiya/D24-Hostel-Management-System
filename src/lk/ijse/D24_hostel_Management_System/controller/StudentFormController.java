@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.D24_hostel_Management_System.entity.Student;
 import lk.ijse.D24_hostel_Management_System.util.Loader;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class StudentFormController implements Loader {
     public TableColumn colDOB;
     public TableColumn colGender;
     public TableColumn colModify;
-    public TableView tblStudent;
+    public TableView<Student> tblStudent;
 
     public void backToDashboardbtnOnAction(ActionEvent actionEvent) throws IOException {
             loadUi("DashboardForm");
