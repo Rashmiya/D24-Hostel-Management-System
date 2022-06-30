@@ -2,13 +2,15 @@ package lk.ijse.D24_hostel_Management_System.bo.impl;
 
 import lk.ijse.D24_hostel_Management_System.bo.custom.StudentBO;
 import lk.ijse.D24_hostel_Management_System.dao.DAOFactory;
+import lk.ijse.D24_hostel_Management_System.dao.custom.StudentDAO;
 import lk.ijse.D24_hostel_Management_System.dto.StudentDTO;
+import lk.ijse.D24_hostel_Management_System.entity.Student;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class StudentBOImpl implements StudentBO {
-    private StudentDAO sDAO = (StudentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.STUDENT);
+    private StudentDAO studentDAO = (StudentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.STUDENT);
     @Override
     public ArrayList<StudentDTO> getAllStudents() throws SQLException, ClassNotFoundException {
         return null;
@@ -16,7 +18,7 @@ public class StudentBOImpl implements StudentBO {
 
     @Override
     public boolean saveStudent(StudentDTO dto) throws SQLException, ClassNotFoundException {
-        return false;
+        return studentDAO.save(new Student(dto.getId(),dto.getName(),dto.getAddress(),dto.getContactNumber(),dto.getDob(),dto.getGender()));
     }
 
     @Override

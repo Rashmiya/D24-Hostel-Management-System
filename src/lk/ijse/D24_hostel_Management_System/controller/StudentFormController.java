@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import lk.ijse.D24_hostel_Management_System.bo.BOFactory;
 import lk.ijse.D24_hostel_Management_System.bo.custom.StudentBO;
+import lk.ijse.D24_hostel_Management_System.dto.StudentDTO;
 import lk.ijse.D24_hostel_Management_System.util.Loader;
 import lk.ijse.D24_hostel_Management_System.view.tm.StudentTM;
 
@@ -98,7 +99,7 @@ public class StudentFormController implements Loader {
             if (btnSave.getText().equals("Save")) {
                 if (cmbGender.getValue() != null) {
                     /*Save Student*/
-                    if (sBO.saveStudent(new StudentDTO(txtStudentID.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtpckrDOB.getValue(), cmbGender.getValue()))) {
+                    if (studentBO.saveStudent(new StudentDTO(txtStudentID.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtpckrDOB.getValue(), cmbGender.getValue()))) {
                         NotificationUtil.playNotification(AnimationType.POPUP, "Student Saved Successfully!", NotificationType.SUCCESS, Duration.millis(3000));
                         btnCancel.fire();
                         loadStudents(sBO.getAllStudents());

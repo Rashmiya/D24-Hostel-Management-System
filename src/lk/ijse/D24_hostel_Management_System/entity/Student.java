@@ -30,4 +30,13 @@ public class Student {
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Reservation> reservationList = new ArrayList<>();
+
+    public Student(String id, String name, String address, String contactNumber, LocalDate dob, String gender) {
+        id = id;
+        this.name = name;
+        this.address = address;
+        contactNumber = contactNumber;
+        this.dob = dob;
+        this.gender = gender;
+    }
 }

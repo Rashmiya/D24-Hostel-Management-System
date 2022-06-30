@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StudentDAOImpl implements StudentDAO {
     @Override
@@ -26,7 +27,14 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public boolean update(Student entity) throws SQLException, ClassNotFoundException {
-        return false;
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.update(entity);
+
+        transaction.commit();
+        session.close();
+        return true;
     }
 
     @Override
@@ -36,7 +44,14 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return false;
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.delete(session.load(Student.class, id));
+
+        transaction.commit();
+        session.close();
+        return true;
     }
 
     @Override
@@ -46,8 +61,17 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public ArrayList<Student> getAll() throws SQLException, ClassNotFoundException {
-        return null;
+        return  null;
     }
+       /* Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        List<Student> list = session.createQuery("FROM Student").list();
+
+        transaction.commit();
+        session.close();
+        return list;*/
+
 
     @Override
     public Student search(String id) throws SQLException, ClassNotFoundException {
