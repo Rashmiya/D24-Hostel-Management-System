@@ -20,11 +20,13 @@ public class BOFactory {
     public SuperBO getBO(BOTypes types){
         switch (types){
             case STUDENT:
-                return new CustomerBOImpl();
+                return new StudentBOImpl();
             case ROOM:
-                return new ItemBOImpl();
+                return null;
+                /*return new RoomBOImpl();*/
             case RESERVATION:
-                return new PurchaseOrderBOImpl();
+                return  null;
+                /*return new ReservationBOImpl();*/
             default:
                 return null;
         }

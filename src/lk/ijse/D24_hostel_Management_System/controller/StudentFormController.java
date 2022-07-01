@@ -3,6 +3,8 @@ package lk.ijse.D24_hostel_Management_System.controller;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -40,7 +42,13 @@ public class StudentFormController implements Loader {
 
     StudentBO studentBO = (StudentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.STUDENT);
 
-    public void initialize(){
+    public void initialize() {
+        ObservableList<String> obList = FXCollections.observableArrayList();
+        obList.add("Male");
+        obList.add("Female");
+
+        cmbGender.setItems(obList);
+    }
        /* colID.setCellValueFactory(new PropertyValueFactory("id"));
         colName.setCellValueFactory(new PropertyValueFactory("name"));
         colAddress.setCellValueFactory(new PropertyValueFactory("address"));
@@ -54,7 +62,7 @@ public class StudentFormController implements Loader {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }*/
-    }
+
 
     private void loadAllStudents() {
         /*tblCustomers.getItems().clear();
@@ -98,7 +106,7 @@ public class StudentFormController implements Loader {
 
     public void saveStudentOnAction(ActionEvent actionEvent) {
         if (datePickerDOB.getValue() != null) {
-            if (btnSave.getText().equals("Save")) {
+            if (btnSave.getText().equalsIgnoreCase("Save")) {
                 if (cmbGender.getValue() != null) {
                     /*Save Student*/
                     try {
