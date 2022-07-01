@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class StudentBOImpl implements StudentBO {
     private StudentDAO studentDAO = (StudentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.STUDENT);
+
     @Override
     public ArrayList<StudentDTO> getAllStudents() throws SQLException, ClassNotFoundException {
         return null;
@@ -23,7 +24,7 @@ public class StudentBOImpl implements StudentBO {
 
     @Override
     public boolean updateStudent(StudentDTO dto) throws SQLException, ClassNotFoundException {
-        return false;
+        return studentDAO.update(new Student(dto.getId(),dto.getName(),dto.getAddress(),dto.getContactNumber(),dto.getDob(),dto.getGender()));
     }
 
     @Override

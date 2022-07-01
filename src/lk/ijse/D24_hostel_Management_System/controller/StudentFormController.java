@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -14,8 +15,9 @@ import lk.ijse.D24_hostel_Management_System.bo.custom.StudentBO;
 import lk.ijse.D24_hostel_Management_System.dto.StudentDTO;
 import lk.ijse.D24_hostel_Management_System.util.Loader;
 import lk.ijse.D24_hostel_Management_System.view.tm.StudentTM;
-
+import org.controlsfx.control.Notifications;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class StudentFormController implements Loader {
     public AnchorPane manageStudentForm;
@@ -99,34 +101,54 @@ public class StudentFormController implements Loader {
             if (btnSave.getText().equals("Save")) {
                 if (cmbGender.getValue() != null) {
                     /*Save Student*/
-                    if (studentBO.saveStudent(new StudentDTO(txtStudentID.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtpckrDOB.getValue(), cmbGender.getValue()))) {
-                        NotificationUtil.playNotification(AnimationType.POPUP, "Student Saved Successfully!", NotificationType.SUCCESS, Duration.millis(3000));
-                        btnCancel.fire();
-                        loadStudents(sBO.getAllStudents());
-                    } else {
-                        NotificationUtil.playNotification(AnimationType.POPUP, "Something Went Wrong !", NotificationType.ERROR, Duration.millis(3000));
+                    try {
+                        if (studentBO.saveStudent(new StudentDTO(txtId.getText(), txtName.getText(), txtAddress.getText(), txtContact.getText(), datePickerDOB.getValue(), (String) cmbGender.getValue()))) {
+
+                            Notifications notify = Notifications.create();
+                            notify.title("Student Added !");
+                            notify.text(" You Successfully Added Student.");
+                            notify.graphic(null);
+                            notify.hideAfter(Duration.seconds(7));
+                            notify.position(Pos.BOTTOM_RIGHT);
+                            notify.showConfirm();
+
+                            /*loadStudents(sBO.getAllStudents());*/
+                        } else {
+                            new Alert(Alert.AlertType.ERROR,"Something Went Wrong!. Please Check Again.").show();
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    } catch (ClassNotFoundException classNotFoundException) {
+                        classNotFoundException.printStackTrace();
                     }
                 } else {
-                    new Alert(Alert.AlertType.ERROR, "Gender Not Selected!", ButtonType.OK).show();
+                    new Alert(Alert.AlertType.ERROR, "Gender Type Not Selected!. Please Select It.", ButtonType.OK).show();
                 }
             } else {
-                if (sBO.updateStudent(new StudentDTO(txtStudentID.getText(), txtStudentName.getText(), txtAddress.getText(), txtContactNo.getText(), dtpckrDOB.getValue(), cmbGender.getValue()))) {
-                    NotificationUtil.playNotification(AnimationType.POPUP, "Student Updated Successfully!", NotificationType.SUCCESS, Duration.millis(3000));
-                    btnCancel.fire();
-                    loadStudents(sBO.getAllStudents());
-                } else {
-                    NotificationUtil.playNotification(AnimationType.POPUP, "Something Went Wrong !", NotificationType.ERROR, Duration.millis(3000));
+                /*Update Student*/
+                try {
+                    if (studentBO.updateStudent(new StudentDTO(txtId.getText(), txtName.getText(), txtAddress.getText(), txtContact.getText(), datePickerDOB.getValue(), (String) cmbGender.getValue()))) {
+
+                        Notifications notify = Notifications.create();
+                        notify.title("Student Added !");
+                        notify.text(" You Successfully Added Student.");
+                        notify.graphic(null);
+                        notify.hideAfter(Duration.seconds(7));
+                        notify.position(Pos.BOTTOM_RIGHT);
+                        notify.showConfirm();
+                       /* loadStudents(sBO.getAllStudents());*/
+                    } else {
+                        new Alert(Alert.AlertType.ERROR,"Something Went Wrong!. Please Check Again.").show();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
                 }
             }
-
         } else {
-            new Alert(Alert.AlertType.ERROR, "Date Of Birth Is Not Selected Or You Are Not Over 18 Years!", ButtonType.OK).show();
-
+            new Alert(Alert.AlertType.ERROR, "Please Select your DOB", ButtonType.OK).show();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
-    }
     }
 
     public void updateStudentOnAction(ActionEvent actionEvent) {
